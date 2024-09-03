@@ -105,7 +105,8 @@ pipeline {
                         echo $BUILD_NUMBER
                         imageTag=$(grep -oP '(?<=fleetman-position-tracker:)[^ ]+' deploy.yaml)
                         echo $imageTag
-			su user jenkins
+			echo ${AWS_ECR_REPO_NAME}
+   			
                         sed -i "s/${AWS_ECR_REPO_NAME}:${imageTag}/${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}/" deploy.yaml
 			git status
    			
