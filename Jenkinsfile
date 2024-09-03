@@ -99,15 +99,13 @@ pipeline {
                     sh '''
                         git config user.email "sohildoshi344@gmail.com"
                         git config user.name "sohil344"
-			#Print current user
-      			whoami
                         BUILD_NUMBER=${BUILD_NUMBER}
                         echo $BUILD_NUMBER
                         imageTag=$(grep -oP '(?<=fleetman-position-tracker:)[^ ]+' deploy.yaml)
                         echo $imageTag
 			echo ${AWS_ECR_REPO_NAME}
    			
-                        sed -i "s/${AWS_ECR_REPO_NAME}:${imageTag}/${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}/" deploy.yaml
+                        sed -i "s/fleetman-position-tracker:${imageTag}/fleetman-position-tracker:${BUILD_NUMBER}/" deploy.yaml
 			git status
    			
 	 		
