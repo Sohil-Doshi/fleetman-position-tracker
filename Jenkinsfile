@@ -99,11 +99,17 @@ pipeline {
                     sh '''
                         git config user.email "sohildoshi344@gmail.com"
                         git config user.name "sohil344"
+			#Print current user
+      			whoami
                         BUILD_NUMBER=${BUILD_NUMBER}
                         echo $BUILD_NUMBER
                         imageTag=$(grep -oP '(?<=fleetman-position-tracker:)[^ ]+' deploy.yaml)
                         echo $imageTag
+			su user jenkins
                         sed -i "s/${AWS_ECR_REPO_NAME}:${imageTag}/${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}/" deploy.yaml
+			git status
+   			
+	 		
                         git add deploy.yaml
                         git commit -m "Update deployment Image to version \${BUILD_NUMBER}"
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_ORG_NAME}/${GIT_REPO_NAME} HEAD:master --force
