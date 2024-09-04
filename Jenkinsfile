@@ -102,7 +102,7 @@ pipeline {
                         BUILD_NUMBER=${BUILD_NUMBER}
                         echo $BUILD_NUMBER
                         imageTag=$(grep -oP '(?<=fleetman-position-tracker:)[^ ]+' deploy.yaml)
-                        echo $imageTag
+                        
 			echo ${AWS_ECR_REPO_NAME}
    			
                         sed -i "s/fleetman-position-tracker:${imageTag}/fleetman-position-tracker:${BUILD_NUMBER}/" deploy.yaml
